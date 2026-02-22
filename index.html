@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Jesi & Dani — 10° Aniversario</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#efe7de;
+      --card:#f7f3ee;
+      --ink:#2a2a2a;
+      --muted:#6f6f6f;
+      --stroke: rgba(0,0,0,.10);
+      --shadow: 0 20px 60px rgba(0,0,0,.18);
+      --accent:#c7a38d;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100dvh;
+      display:grid;
+      place-items:center;
+      padding:18px;
+      color:var(--ink);
+      font-family: Nunito, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(900px 500px at 20% 10%, rgba(255,255,255,.55) 0%, transparent 60%),
+        radial-gradient(900px 500px at 80% 20%, rgba(255,255,255,.35) 0%, transparent 60%),
+        linear-gradient(180deg, #f3ece5, var(--bg));
+    }
+
+    .card{
+      width:min(920px, 100%);
+      height:min(72dvh, 560px);
+      background: var(--card);
+      border:1px solid var(--stroke);
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+      display:grid;
+    }
+
+    /* textura suave */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(0deg, rgba(0,0,0,.015) 0 1px, transparent 1px 3px),
+        repeating-linear-gradient(90deg, rgba(0,0,0,.01) 0 1px, transparent 1px 4px);
+      opacity:.35;
+      pointer-events:none;
+    }
+
+    /* Carrusel */
+    .deck{
+      position:relative;
+      display:flex;
+      height:100%;
+      overflow-x:auto;
+      scroll-snap-type:x mandatory;
+      scroll-behavior:smooth;
+      scrollbar-width:none;
+      z-index:1;
+    }
+    .deck::-webkit-scrollbar{display:none}
+
+    .slide{
+      flex: 0 0 100%;
+      height:100%;
+      scroll-snap-align:start;
+      display:grid;
+      place-items:center;
+      padding:28px 18px;
+    }
+
+    .content{
+      text-align:center;
+      max-width: 720px;
+      padding: 10px;
+    }
+
+    .script{
+      font-family: Allura, cursive;
+      font-weight:400;
+      text-shadow: 0 1px 0 rgba(0,0,0,.06);
+    }
+
+    h1{
+      margin: 0 0 6px;
+      font-size: clamp(48px, 6vw, 86px);
+      color: var(--accent);
+      line-height:1;
+    }
+
+    .sub{
+      margin: 0;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+
+    .date{
+      margin: 12px 0 12px;
+      font-size: clamp(34px, 4.6vw, 58px);
+      color: var(--accent);
+      line-height:1.05;
+    }
+
+    .msg{
+      margin: 10px auto 0;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.5;
+      font-size: 15px;
+    }
+
+    /* Foto */
+    .photoWrap{
+      width: min(280px, 70vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 999px;
+      overflow:hidden;
+      border: 1px solid rgba(199,163,141,.45);
+      box-shadow: 0 10px 30px rgba(0,0,0,.12);
+      margin: 16px auto 10px;
+      background: linear-gradient(180deg, #ffffff, #fbf7f2);
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
+    .photoWrap img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .photoHint{
+      position:absolute;
+      inset:auto 12px 12px 12px;
+      font-size:12px;
+      color: rgba(0,0,0,.55);
+      background: rgba(255,255,255,.7);
+      border:1px solid rgba(0,0,0,.08);
+      border-radius: 999px;
+      padding: 6px 10px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Bloques */
+    .box{
+      border:1px solid var(--stroke);
+      background:#ffffffa6;
+      border-radius: 12px;
+      padding: 14px 14px;
+      text-align:left;
+      max-width: 620px;
+      margin: 14px auto 0;
+    }
+    .row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .pill{
+      border:1px solid rgba(0,0,0,.10);
+      background: #fff;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-weight:700;
+      font-size: 13px;
+    }
+
+    .btnrow{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      flex-wrap:wrap;
+      margin-top: 18px;
+    }
+    .btn{
+      border:1px solid var(--stroke);
+      background: white;
+      color: var(--ink);
+      padding: 11px 14px;
+      border-radius: 10px;
+      cursor:pointer;
+      text-decoration:none;
+      font-weight:700;
+      transition: transform .12s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn.primary{
+      background: linear-gradient(180deg, #ffffff, #fbf7f2);
+      border-color: rgba(199,163,141,.45);
+    }
+
+    /* Nav */
+    .nav{
+      position:absolute;
+      inset:auto 14px 14px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      z-index:2;
+      pointer-events:none;
+    }
+    .arrow{
+      pointer-events:auto;
+      width:44px; height:44px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.75);
+      display:grid; place-items:center;
+      cursor:pointer;
+      backdrop-filter: blur(8px);
+    }
+    .dots{
+      pointer-events:auto;
+      display:flex; gap:8px; align-items:center; justify-content:center;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid rgba(0,0,0,.10);
+      background: rgba(255,255,255,.75);
+      backdrop-filter: blur(8px);
+      margin:0 auto;
+    }
+    .dot{
+      width:8px; height:8px;
+      border-radius:99px;
+      border:1px solid rgba(0,0,0,.35);
+      background:transparent;
+      opacity:.75;
+      cursor:pointer;
+    }
+    .dot.active{background: var(--accent); border-color: transparent; opacity:1}
+
+    .tiny{
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="card">
+    <div class="deck" id="deck">
+      <!-- Pantalla 1 -->
+      <section class="slide">
+        <div class="content">
+          <h1 class="script" id="names">Jesi y Dani.</h1>
+          <p class="sub" id="subtitle">Nuestro 10° aniversario</p>
+
+          <div class="photoWrap">
+            <!-- Cambiá la foto acá: poné un archivo "foto.jpg" en la misma carpeta -->
+            <img id="photo" src="foto.jpg" alt="Foto de Jesi y Dani" onerror="this.style.display='none'; this.parentElement.querySelector('.photoHint').textContent='Agregá foto.jpg (o cambiá el src)';">
+            <div class="photoHint">Reemplazá <b>foto.jpg</b> por tu foto</div>
+          </div>
+
+          <div class="date script" id="dateLine">22 de marzo de 2025</div>
+
+          <p class="msg" id="intro">
+            Guardate la fecha 💛
+          </p>
+        </div>
+      </section>
+
+      <!-- Pantalla 2 -->
+      <section class="slide">
+        <div class="content">
+          <h1 class="script" style="margin-bottom:10px">Detalles</h1>
+
+          <div class="box">
+            <div class="row">
+              <div class="pill" id="placePill">📍 Lugar: X (San Cristóbal)</div>
+              <div class="pill" id="basketPill">🧺 A la canasta</div>
+            </div>
+            <p class="msg" id="vibe" style="text-align:left; margin-top:12px">
+              Vení con ganas de pasarla bien ✨
+            </p>
+
+            <div class="btnrow">
+              <button class="btn primary" id="btnYes">✅ Confirmar por WhatsApp</button>
+              <button class="btn" id="btnNo">🙁 No puedo</button>
+            </div>
+
+            <div class="tiny" id="hint">
+              (El botón abre WhatsApp con el mensaje listo para enviar)
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="nav">
+      <button class="arrow" id="prevBtn" aria-label="Anterior">◀</button>
+      <div class="dots" id="dots" aria-label="Secciones"></div>
+      <button class="arrow" id="nextBtn" aria-label="Siguiente">▶</button>
+    </div>
+  </main>
+
+  <script>
+    /***********************
+     * EDITÁ ESTO
+     ***********************/
+    const CONFIG = {
+      names: "Jesi y Dani.",
+      subtitle: "Nuestro 10° aniversario",
+      dateText: "22 de marzo de 2025",
+
+      // Lugar / textos
+      placeText: "Lugar: X (San Cristóbal)",
+      basketText: "A la canasta",
+      vibeText: "Vení con ganas de pasarla bien ✨",
+
+      // WhatsApp destino (formato internacional sin +, sin espacios)
+      whatsappNumber: "5491100000000",
+    };
+
+    /***********************
+     * RENDER
+     ***********************/
+    document.getElementById("names").textContent = CONFIG.names;
+    document.getElementById("subtitle").textContent = CONFIG.subtitle;
+    document.getElementById("dateLine").textContent = CONFIG.dateText;
+
+    document.getElementById("placePill").textContent = "📍 " + CONFIG.placeText;
+    document.getElementById("basketPill").textContent = "🧺 " + CONFIG.basketText;
+    document.getElementById("vibe").textContent = CONFIG.vibeText;
+
+    /***********************
+     * CARRUSEL
+     ***********************/
+    const deck = document.getElementById("deck");
+    const slides = Array.from(deck.querySelectorAll(".slide"));
+    const dots = document.getElementById("dots");
+    let active = 0;
+
+    slides.forEach((_, i)=>{
+      const d = document.createElement("button");
+      d.className = "dot" + (i===0 ? " active":"");
+      d.addEventListener("click", ()=>goTo(i));
+      dots.appendChild(d);
+    });
+
+    function updateDots(){
+      Array.from(dots.children).forEach((d,i)=>d.classList.toggle("active", i===active));
+    }
+    function goTo(i){
+      active = Math.max(0, Math.min(slides.length-1, i));
+      deck.scrollTo({ left: active * deck.clientWidth, behavior:"smooth" });
+      updateDots();
+    }
+
+    document.getElementById("prevBtn").addEventListener("click", ()=>goTo(active-1));
+    document.getElementById("nextBtn").addEventListener("click", ()=>goTo(active+1));
+
+    let t=null;
+    deck.addEventListener("scroll", ()=>{
+      clearTimeout(t);
+      t=setTimeout(()=>{
+        active = Math.round(deck.scrollLeft / deck.clientWidth);
+        updateDots();
+      }, 80);
+    });
+    window.addEventListener("resize", ()=>goTo(active));
+
+    /***********************
+     * WhatsApp RSVP
+     ***********************/
+    function waUrl(going){
+      const ans = going ? "✅ Confirmo" : "🙁 No puedo";
+      const msg =
+        `${ans}\n` +
+        `${CONFIG.names}\n` +
+        `${CONFIG.subtitle}\n` +
+        `${CONFIG.dateText}\n` +
+        `${CONFIG.placeText}\n` +
+        `${CONFIG.basketText}`;
+      return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+    }
+
+    document.getElementById("btnYes").addEventListener("click", ()=>window.open(waUrl(true), "_blank"));
+    document.getElementById("btnNo").addEventListener("click", ()=>window.open(waUrl(false), "_blank"));
+  </script>
+</body>
+</html>
