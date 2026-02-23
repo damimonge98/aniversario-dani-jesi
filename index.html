@@ -328,7 +328,7 @@
                 <div class="ico">✨</div>
                 <div class="detailText">
                   <b>Plan</b>
-                  <span id="vibeText">Vení con ganas de pasarla bien</span>
+                  <span id="vibeText">¡Vení con ganas de pasarla bien! </span>
                 </div>
               </div>
             </div>
@@ -366,9 +366,9 @@
 
       // Detalles
       place: "Av. Trabajadores Ferroviarios 1193, Salón OSECAC, San Cristóbal.",
-      vibe: "Vení con ganas de pasarla bien",
+      vibe: "¡Vení con ganas de pasarla bien! ",
 
-      note: "Por favor, confirmar hasta una semana antes",
+      note: "Confirmar hasta el 15 de marzo. ¡Esperamos verte! 🎉",
 
       // WhatsApp destino (formato internacional sin +, sin espacios)
       whatsappNumber: "5493408673245",
@@ -442,13 +442,7 @@
      ***********************/
     function waUrl(){
       const msg =
-        `✅ Confirmo asistencia\n` +
-        `${CONFIG.names}\n` +
-        `${CONFIG.subtitle}\n` +
-        `${CONFIG.dateText}\n` +
-        `${CONFIG.timeText}\n` +
-        `Lugar: ${CONFIG.place}\n` +
-        `${CONFIG.note}`;
+        `✅ Confirmo asistencia\n`;
       return `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(msg)}`;
     }
 
